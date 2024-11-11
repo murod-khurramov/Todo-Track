@@ -7,11 +7,23 @@
         <p class="text-gray-600">Это ваша панель управления, где вы можете просматривать и управлять своими задачами.</p>
 
         <div class="flex justify-end mb-4">
-            <form method="POST" action="{{ route('logout') }}">
+            <form id="logout-form" method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none">Выйти</button>
+                <button type="button" onclick="confirmLogout()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none absolute top-4 right-4">
+                    Выйти
+                </button>
             </form>
         </div>
+
+        <script>
+            function confirmLogout() {
+                let confirmation = confirm("Вы уверены, что хотите выйти?");
+                if (confirmation) {
+                    document.getElementById('logout-form').submit();
+                }
+            }
+        </script>
+
 
         <div class="grid grid-cols-3 gap-4 mt-6">
             <div class="container mx-auto p-4">
