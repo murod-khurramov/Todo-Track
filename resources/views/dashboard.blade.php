@@ -42,6 +42,7 @@
                                 <span class="font-semibold text-gray-700 {{ $task->completed ? 'line-through text-gray-400' : '' }}">
                                     {{ $task->title }}
                                 </span>
+
                                 <form method="POST" action="{{ route('tasks.toggle', $task->id) }}" class="ml-4">
                                     @csrf
                                     <button type="submit" class="text-blue-500 hover:text-blue-700 focus:outline-none">

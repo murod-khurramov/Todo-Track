@@ -41,7 +41,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function toggleCompleted($id): \Illuminate\Http\RedirectResponse
+    public function toggleComplete($id): \Illuminate\Http\RedirectResponse
     {
         $task = Task::query()->findOrFail($id);
         $task->completed = !$task->completed;
