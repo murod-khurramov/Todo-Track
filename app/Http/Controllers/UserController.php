@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use PHPUnit\TextUI\Application;
+//use Illuminate\Support\Facades\Validator;
+
 
 class UserController extends Controller
 {
@@ -27,7 +29,7 @@ class UserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
@@ -37,7 +39,7 @@ class UserController extends Controller
             return redirect()->route('register')->withErrors($validator);
         }
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),

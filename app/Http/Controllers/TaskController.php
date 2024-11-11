@@ -13,7 +13,7 @@ class TaskController extends Controller
 {
     public function index(): View|Factory|Application
     {
-        $tasks = Task::where('user_id', Auth::id())->get();
+        $tasks = Task::query()->where('user_id', Auth::id())->get();
         return view('dashboard', compact('tasks'));
     }
 
@@ -24,7 +24,7 @@ class TaskController extends Controller
             'description' => 'required|string|max:1000',
         ]);
 
-        Task::create([
+        Task::query()->create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'user_id' => Auth::id(),
@@ -35,7 +35,7 @@ class TaskController extends Controller
 
     public function destroy($id): \Illuminate\Http\RedirectResponse
     {
-        $task = Task::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $task = Task::query()->where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $task->delete();
 
         return redirect()->route('tasks.index');
@@ -43,7 +43,7 @@ class TaskController extends Controller
 
     public function toggleCompleted($id): \Illuminate\Http\RedirectResponse
     {
-        $task = Task::findOrFail($id);
+        $task = Task::query()->findOrFail($id);
         $task->completed = !$task->completed;
         $task->save();
 
