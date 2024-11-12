@@ -24,7 +24,6 @@
             }
         </script>
 
-
         <div class="grid grid-cols-3 gap-4 mt-6">
             <div class="container mx-auto p-4">
                 <form method="POST" action="{{ route('tasks.store') }}" class="mb-4 space-y-4">
@@ -35,6 +34,7 @@
                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300"></textarea>
                     <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none">Добавить</button>
                 </form>
+
                 <ul>
                     @foreach ($tasks as $task)
                         <li class="flex flex-col bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 mb-2">
@@ -49,6 +49,12 @@
                                         <i class="fas {{ $task->completed ? 'fa-undo' : 'fa-check' }}"></i> {{ $task->completed ? 'Восстановить' : 'Завершить' }}
                                     </button>
                                 </form>
+
+                                <!-- Edit Button -->
+                                <button type="button" onclick="toggleEditForm({{ $task->id }})" class="text-yellow-500 hover:text-yellow-700 focus:outline-none">
+                                    Редактировать
+                                </button>
+
                                 <form method="POST" action="{{ route('tasks.destroy', $task->id) }}" class="ml-4">
                                     @csrf
                                     @method('DELETE')
@@ -56,6 +62,17 @@
                                 </form>
                             </div>
                             <p class="text-gray-600 mt-1">{{ $task->description }}</p>
+
+                            <!-- Edit Form (Hidden by Default) -->
+                            <form method="POST" action="{{ route('tasks.update', $task->id) }}" id="edit-form-{{ $task->id }}" class="hidden mt-2">
+                                @csrf
+                                @method('PUT')
+                                <input type="text" name="title" value="{{ $task->title }}" required
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300 mb-2">
+                                <textarea name="description" rows="3" required
+                                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300">{{ $task->description }}</textarea>
+                                <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none">Сохранить</button>
+                            </form>
                         </li>
                     @endforeach
                 </ul>
@@ -63,4 +80,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    function toggleEditForm(taskId) {
+        const editForm = document.getElementById(`edit-form-${taskId}`);
+        editForm.classList.toggle('hidden');
+    }
+</script>
 </body>

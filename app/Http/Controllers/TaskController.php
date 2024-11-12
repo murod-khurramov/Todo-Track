@@ -50,4 +50,25 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success');
     }
 
+    public function edit($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
+    {
+        $task = Task::query()->findOrFail($id);
+        return view('tasks.edit', compact('task'));
+    }
+
+    public function update(Request $request, $id): \Illuminate\Http\RedirectResponse
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+        ]);
+
+        $task = Task::query()->findOrFail($id);
+        $task->title = $request->input('title');
+        $task->description = $request->input('description');
+        $task->save();
+
+        return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
+    }
+
 }
