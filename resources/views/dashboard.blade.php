@@ -50,15 +50,18 @@
                                     </button>
                                 </form>
 
-                                <!-- Edit Button -->
+                                <!-- Edit Button with Icon -->
                                 <button type="button" onclick="toggleEditForm({{ $task->id }})" class="text-yellow-500 hover:text-yellow-700 focus:outline-none">
-                                    Редактировать
+                                    <i class="fas fa-edit"></i> <!-- Edit icon -->
                                 </button>
 
+                                <!-- Delete Button with Icon -->
                                 <form method="POST" action="{{ route('tasks.destroy', $task->id) }}" class="ml-4">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:text-red-700 focus:outline-none" onclick="return confirm('Вы действительно хотите удалить эту задачу?');">Удалить</button>
+                                    <button type="submit" class="text-red-500 hover:text-red-700 focus:outline-none" onclick="return confirm('Вы действительно хотите удалить эту задачу?');">
+                                        <i class="fas fa-trash"></i> <!-- Delete icon -->
+                                    </button>
                                 </form>
                             </div>
                             <p class="text-gray-600 mt-1">{{ $task->description }}</p>
