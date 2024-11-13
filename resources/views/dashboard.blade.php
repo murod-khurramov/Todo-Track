@@ -21,7 +21,7 @@
         <div class="flex justify-end mb-4">
             <form id="logout-form" method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="button" onclick="confirmLogout()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none absolute top-4 right-4">
+                <button type="button" onclick="confirmLogout()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none absolute top-4 right-6">
                     Выйти
                 </button>
             </form>
@@ -50,15 +50,16 @@
     </div>
 
     <!-- O'ngdagi saqlangan listlar -->
-    <div class="w-2/3 p-6 overflow-y-auto mt-8">
+    <div class="w-2/3 p-6 overflow-y-auto mt-14">
         <ul>
             @foreach ($tasks as $task)
                 <li class="flex items-center space-x-4 border rounded-lg px-4 py-2 mb-2" :class="{ 'bg-gray-800 border-gray-700': darkMode, 'bg-gray-50 border-gray-200': !darkMode }">
                     <!-- Checkbox - faqat kvadrat shaklida -->
                     <form method="POST" action="{{ route('tasks.toggle', $task->id) }}" class="mr-4">
                         @csrf
-                        <button type="submit" class="w-5 h-5 border-2 border-gray-400 rounded-sm focus:outline-none bg-transparent">
-                            <span class="{{ $task->completed ? 'bg-green-500' : '' }} block w-full h-full"></span>
+                        <button type="submit" class="w-5 h-5 border-2 border-gray-400 rounded-sm focus:outline-none"
+                                :class="{ 'bg-green-500 text-white': {{ $task->completed }}, 'bg-transparent': !{{ $task->completed }} }">
+                            <span x-show="{{ $task->completed }}" class="block text-center">&#10003;</span>
                         </button>
                     </form>
 
