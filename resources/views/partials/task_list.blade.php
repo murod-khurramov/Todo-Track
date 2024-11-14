@@ -1,13 +1,14 @@
 <!-- resources/views/partials/task_list.blade.php -->
-<div class="w-2/3 p-6 overflow-y-auto mt-14">
-    <ul>
+<div class="w-full p-6 mt-14">
+    <ul class="flex flex-wrap gap-4 justify-start">
         @foreach ($tasks as $task)
-            <li class="flex items-center space-x-4 border rounded-lg px-4 py-2 mb-2"
+            <li class="flex flex-col items-start space-y-4 border rounded-lg p-4 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4"
                 :class="{ 'bg-gray-800 border-gray-700': darkMode, 'bg-gray-50 border-gray-200': !darkMode }">
+
                 <form method="POST" action="{{ route('tasks.toggle', $task->id) }}" class="mr-4">
                     @csrf
                     <button type="submit" class="w-5 h-5 border-2 border-gray-400 rounded-sm focus:outline-none"
-                            :class="{ 'bg-green-500 text-white': {{ $task->completed }}, 'bg-transparent': !{{ $task->completed }} }">
+                            :class="{ 'bg-green-500 text-white': {{ $task->completed }} == 1, 'bg-transparent': {{ $task->completed }} == 0 }">
                         <span x-show="{{ $task->completed }}" class="block text-center">&#10003;</span>
                     </button>
                 </form>

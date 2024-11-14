@@ -8,4 +8,19 @@
     <div class="flex flex-col w-full">
         <span :class="{ 'line-through': {{ $task->completed }} }">{{ $task->title }}</span>
     </div>
+    <!-- Edit and Delete icons -->
+    <div class="flex space-x-2">
+        <!-- Edit icon -->
+        <a href="{{ route('tasks.edit', $task->id) }}" class="text-blue-500 hover:text-blue-700">
+            <i class="fas fa-edit"></i>
+        </a>
+        <!-- Delete icon -->
+        <form method="POST" action="{{ route('tasks.destroy', $task->id) }}" onsubmit="return confirm('Are you sure?');">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="text-red-500 hover:text-red-700">
+                <i class="fas fa-trash"></i>
+            </button>
+        </form>
+    </div>
 </li>
