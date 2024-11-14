@@ -36,5 +36,7 @@
                       :class="{ 'bg-gray-800 text-white border-gray-700': darkMode, 'bg-white border-gray-300': !darkMode }"></textarea>
             <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none">Добавить</button>
         </form>
+
+
     </div>
 </div>

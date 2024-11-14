@@ -13,9 +13,11 @@ class TaskController extends Controller
 {
     public function index(): View|Factory|Application
     {
+        // Fetch tasks for the authenticated user only
         $tasks = Task::query()->where('user_id', Auth::id())->get();
         return view('dashboard', compact('tasks'));
     }
+
 
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {

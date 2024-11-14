@@ -30,11 +30,11 @@
     @yield('content')
 </div>
 
-<ul>
-    @foreach ($tasks as $task)
-        @include('partials.task-item', ['task' => $task])
-    @endforeach
-</ul>
+{{--<ul>--}}
+{{--    @foreach ($tasks as $task)--}}
+{{--        @include('partials.task-item', ['task' => $task])--}}
+{{--    @endforeach--}}
+{{--</ul>--}}
 
 <script src="{{ asset('js/app.js') }}" defer></script>
 
