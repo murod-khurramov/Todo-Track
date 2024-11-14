@@ -41,13 +41,13 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function toggleComplete($id): \Illuminate\Http\RedirectResponse
+    public function toggleComplete(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         $task = Task::query()->findOrFail($id);
-        $task->completed = !$task->completed;
+        $task->completed = (int)$request->input('completed');
         $task->save();
 
-        return redirect()->route('tasks.index')->with('success');
+        return response()->json(['success' => true]);
     }
 
     public function edit($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
@@ -70,5 +70,4 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
     }
-
 }
