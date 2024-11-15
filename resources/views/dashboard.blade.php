@@ -3,10 +3,17 @@
 
 @section('content')
     @include('partials.sidebar')
-{{--    @include('partials.task_list', ['tasks' => $tasks])--}}
+
+    <ul>
+        @foreach ($tasks as $task)
+            @include('partials.task-item', ['task' => $task])
+        @endforeach
+    </ul>
 @endsection
 <ul>
-    @foreach ($tasks as $task)
+    @forelse ($tasks as $task)
         @include('partials.task-item', ['task' => $task])
-    @endforeach
+    @empty
+        <p>Hozircha vazifalar mavjud emas.</p>
+    @endforelse
 </ul>

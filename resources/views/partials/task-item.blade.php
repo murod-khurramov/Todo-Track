@@ -6,7 +6,7 @@
         class="checkbox w-5 h-5 border-2 border-gray-400 rounded-sm focus:outline-none">
     </form>
     <div class="flex flex-col w-full">
-        <span :class="{ 'line-through': {{ $task->completed }} }">{{ $task->title }}</span>
+        <span class="{ 'line-through': {{ $task->completed }} }">{{ $task->title }}</span>
     </div>
     <!-- Edit and Delete icons -->
     <div class="flex space-x-2">

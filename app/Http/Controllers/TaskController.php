@@ -11,12 +11,19 @@ use PHPUnit\TextUI\Application;
 
 class TaskController extends Controller
 {
-    public function index(): View|Factory|Application
+    public function index(): View
     {
-        // Fetch tasks for the authenticated user only
-        $tasks = Task::query()->where('user_id', Auth::id())->get();
+        // Faqat avtorizatsiya qilingan foydalanuvchi uchun vazifalarni olish
+        if (Auth::check()) {
+            $tasks = Task::query()->where('user_id', Auth::id())->get(); // Foydalanuvchiga tegishli vazifalar
+        } else {
+            $tasks = collect(); // Agar foydalanuvchi tizimga kirmagan bo'lsa, bo'sh kolleksiya
+        }
+
+        // Dashboard sahifasiga $tasks ma'lumotlarini yuborish
         return view('dashboard', compact('tasks'));
     }
+
 
 
     public function store(Request $request): \Illuminate\Http\RedirectResponse
@@ -55,7 +62,7 @@ class TaskController extends Controller
     public function edit($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
         $task = Task::query()->findOrFail($id);
-        return view('tasks.edit', compact('task'));
+        return view('tasks.edit', ['task' => $task]);
     }
 
     public function update(Request $request, $id): \Illuminate\Http\RedirectResponse
